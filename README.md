@@ -2,44 +2,73 @@
 
 Il progetto consiste nella creazione di un'applicazione web per una biblioteca digitale che consente agli utenti di **caricare**, **scaricare** e **visualizzare** file PDF. Il sistema è protetto da un'autenticazione sicura tramite LDAP, con l'aggiunta di crittografia per garantire la protezione dei file. L'accesso alle risorse è strettamente controllato per evitare l'accesso non autorizzato ai documenti sensibili, proteggendo al contempo la privacy e la sicurezza degli utenti.
  
-**Tecnologie Utilizzate:**
+ SCERMATA screen PROGETTO:
 
-**Backend:** Python con il framework Flask, utilizzato per lo sviluppo dell'applicazione web e la gestione delle API.
+ 
+ 
+## Tecnologie Utilizzate
 
-**Database:** PostgreSQL, un sistema di gestione di database relazionali robusto e scalabile, impiegato per archiviare i dati relativi agli utenti e altre informazioni.
+### Backend
+Python con il framework Flask, utilizzato per lo sviluppo dell'applicazione web e la gestione delle API.
 
-**Autenticazione:** Utilizzo del protocollo LDAP per la gestione dell'autenticazione utente, tramite la libreria ldap3, che consente una connessione sicura e verifiche delle credenziali contro un server LDAP.
+### Database:
+PostgreSQL, un sistema di gestione di database relazionali robusto e scalabile, impiegato per archiviare i dati relativi agli utenti e altre informazioni.
 
-**Storage:** I file PDF vengono gestiti e archiviati nel file system locale, con una gestione sicura e strutturata.
+### Autenticazione
+Utilizzo del protocollo LDAP per la gestione dell'autenticazione utente, tramite la libreria ldap3, che consente una connessione sicura e verifiche delle credenziali contro un server LDAP.
 
-**Sicurezza:** Implementazione della crittografia AES-256 per proteggere i file PDF e garantire la sicurezza dei documenti sensibili, insieme all'uso di bcrypt per l'hashing delle password e la protezione dei dati degli utenti.
+### Storage
+I file PDF vengono gestiti e archiviati nel file system locale, con una gestione sicura e strutturata.
 
-**Framework e Librerie:**
+### Sicurezza:
+Implementazione della crittografia AES-256 per proteggere i file PDF e garantire la sicurezza dei documenti sensibili, insieme all'uso di bcrypt per l'hashing delle password e la protezione dei dati degli utenti.
 
-**Flask:** Framework leggero e potente per lo sviluppo di applicazioni web, usato per la creazione delle API e la gestione delle richieste HTTP.
+## Framework e Librerie
 
-**ldap3:** Libreria Python per interagire con server LDAP, usata per implementare il sistema di autenticazione sicura basato su LDAP.
+### Flask:
+Framework leggero e potente per lo sviluppo di applicazioni web, usato per la creazione delle API e la gestione delle richieste HTTP.
 
-**Flask-Login:** Estensione di Flask per gestire in modo sicuro le sessioni degli utenti e l'autenticazione nelle applicazioni web.
+### ldap3
+Libreria Python per interagire con server LDAP, usata per implementare il sistema di autenticazione sicura basato su LDAP.
 
-**pycryptodome:** Libreria Python per la cifratura dei file, utilizzata per implementare l'algoritmo di crittografia AES-256 che protegge i file PDF caricati dagli utenti.
+### Flask-Login 
+Estensione di Flask per gestire in modo sicuro le sessioni degli utenti e l'autenticazione nelle applicazioni web.
 
-**Problemi di Sicurezza:**
+### pycryptodome 
+Libreria Python per la cifratura dei file, utilizzata per implementare l'algoritmo di crittografia AES-256 che protegge i file PDF caricati dagli utenti.
 
-**Accesso non autorizzato:** Rischio che utenti non autenticati accedano ai documenti sensibili.
-**Furto di credenziali:** Vulnerabilità agli attacchi di phishing o brute-force.
-*+Condivisione non autorizzata dei file:** Possibilità di distribuzione illegale dei file PDF.
-**Attacchi informatici vari:** Rischio di attacchi come SQL Injection e Cross-Site Scripting (XSS) per compromettere la sicurezza del sistema.
+## Problemi di Sicurezza
 
-**Soluzioni di Sicurezza:**
+### Accesso non autorizzato
+Rischio che utenti non autenticati accedano ai documenti sensibili.
 
-**Autenticazione sicura tramite LDAP:** Gli utenti devono autenticarsi tramite LDAP prima di accedere al sistema, riducendo il rischio di accesso non autorizzato.
-**Crittografia dei file:** I file PDF sono cifrati con AES-256, impedendo l'accesso non autorizzato ai contenuti.
-**Protezione contro attacchi di brute-force:** Implementazione di un sistema di blocco account in caso di tentativi di accesso sospetti.
-**Hashing delle password con bcrypt:** Le password degli utenti sono protette tramite hashing sicuro, prevenendo la compromissione delle credenziali in caso di attacco.
-**Validazione degli input e protezione contro SQL Injection e XSS:** Uso di query parametrizzate per evitare SQL Injection e sanificazione dell'input per prevenire XSS.
+### Furto di credenziali
+Vulnerabilità agli attacchi di phishing o brute-force.
 
-**Struttura progetto:**
+### Condivisione non autorizzata dei file 
+Possibilità di distribuzione illegale dei file PDF.
+
+### Attacchi informatici vari
+Rischio di attacchi come SQL Injection e Cross-Site Scripting (XSS) per compromettere la sicurezza del sistema.
+
+## Soluzioni di Sicurezza
+
+### Autenticazione sicura tramite LDAP
+Gli utenti devono autenticarsi tramite LDAP prima di accedere al sistema, riducendo il rischio di accesso non autorizzato.
+
+### Crittografia dei file
+I file PDF sono cifrati con AES-256, impedendo l'accesso non autorizzato ai contenuti.
+
+### Protezione contro attacchi di brute-force
+Implementazione di un sistema di blocco account in caso di tentativi di accesso sospetti.
+
+### Hashing delle password con bcrypt
+Le password degli utenti sono protette tramite hashing sicuro, prevenendo la compromissione delle credenziali in caso di attacco.
+
+### Validazione degli input e protezione contro SQL Injection e XSS
+Uso di query parametrizzate per evitare SQL Injection e sanificazione dell'input per prevenire XSS.
+
+## Struttura progetto
 
 | Nome File/Cartella  | Descrizione                                                   |
 |---------------------|---------------------------------------------------------------|
@@ -55,7 +84,7 @@ Il progetto consiste nella creazione di un'applicazione web per una biblioteca d
 | `requirements.txt`  | Elenco delle dipendenze Python da installare                  |
 
 
-**Procedura per l'avvio dell applicazione:**
+## Procedura per l'avvio dell'applicazione
 
 1. Creazione dell'ambiente e installazione delle dipendenze:
 
@@ -73,10 +102,14 @@ apt install python3
 
 3. Creazione dell'ambiente virtuale Python:  
 ```sh
-python3 -m venv venv #questo creerà una cartella "venv";  
-source venv/bin/activate #avvia l'ambiente virtuale;  
+python3 -m venv venv 
 ```
+#questo creerà una cartella "venv";
 
+```sh
+source venv/bin/activate   
+```
+#avvia l'ambiente virtuale;
 4. Installa le dipendenze necessarie:
 ```sh
 sudo apt install python3-pip #add comment
@@ -133,29 +166,30 @@ Durante l'installazione, ci chiedereà una password l'amministratore LDAP da con
 
 Per riconfigurare il server LDAP (se necessario):
 ```sh
-sudo dpkg-reconfigure slapd (INIZIALIZZO IL DOMINIO dove verranno creati gli utenti)
+sudo dpkg-reconfigure slapd 
 ```
+(inizializzo il diminio dove verranno creati gli utenti)
+
 Installare un LDAP Browser su windows:
 ```sh
-https://directory.apache.org/studio/download/download-windows.html (PEr creare utenti e usare ldap da interfaccia grafica)
+https://directory.apache.org/studio/download/download-windows.html (Per creare utenti e usare ldap da interfaccia grafica)
 ```
 
 In **/home/raffa/ldap** della WSL ci sono dei file per inizializzare l'LDAP:
 prima lanciare
 
-| Comando                                                                                | Descrizione                                                       |
-|----------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| `ldapadd -x -D "cn=admin,dc=library,dc=com" -W -f userandgroup.ldif`                   | Aggiunge gli oggetti *user* e *group* alla struttura LDAP         |
-| `ldapadd -x -D "cn=admin,dc=library,dc=com" -W -f user.ldif`                           | Crea gli utenti specificati nel file `user.ldif`                  |
-
+| Comando                                                                                                     | Descrizione                                                       |
+|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| `ldapadd -x -D "cn=admin,dc=library,dc=com" -W -f userandgroup.ldif`                                        | Aggiunge gli oggetti *user* e *group* alla struttura LDAP         |
+| `ldapadd -x -D "cn=admin,dc=library,dc=com" -W -f user.ldif`                                                | Crea gli utenti specificati nel file `user.ldif`                  |
+| `ldapdelete -x -D "cn=admin,dc=library,dc=com" -W "uid=test1,ou=users,dc=library,dc=com"`                   | Cancella un utente dalla directory LDAP                           |
 
 
 Se mi connetto da gui vedo i risultati.
 
-
 7. Creazione dell'app Flask e configurazione di LDAP
-Crea il file app.py e inizializza Flask e le configurazioni per LDAP: (tutto in app.py)
-Aggiungere codice app.py (verificare se è cosi o spsotati in altri file)
+Crea il file app.py e inizializza Flask e le configurazioni per LDAP: (tutto in **app.py**)
+Aggiungere codice **app.py** (verificare se è cosi o spostati in altri file)
     
 8. Crittografia dei file PDF
 La funzione encrypt_file utilizza la libreria **pycryptodome** per cifrare i file PDF. Ogni volta che un file viene caricato, viene cifrato con AES-256 prima di essere salvato sul server.
@@ -203,20 +237,23 @@ Puoi verificare che il database sia stato creato correttamente con:
 ```sh
 \l
 ```
-Creazione utente:
+- Creazione utente:
  Creare un utente per il tuo database
 Per utilizzare il database biblioteca_db, è consigliabile creare un nuovo utente. Esegui i seguenti comandi:
-????????????????????INSERIRE COMANDI !!!!!!!!!!
+```sh
+CREATE USER username WITH PASSWORD 'password';
+```
 
-Trasferire la proprietà del database:
+- Trasferire la proprietà del database:
 Per trasferire la proprietà del database biblioteca_db all'utente admin, esegui il comando:
 ```sh
-ALTER DATABASE biblioteca_db OWNER TO admin;
+ALTER DATABASE biblioteca_db OWNER TO username;
 ```
 Questo comando cambierà il proprietario del database a admin.
 
-Concedere tutti i privilegi sull'intero database a admin:
-Ora che l'utente admin è il proprietario del database, dobbiamo assicurarci che abbia tutti i privilegi. Puoi concedere i privilegi con il comando:
+- Concedere tutti i privilegi sull'intero database a admin:
+Ora che l'utente admin è il proprietario del database, dobbiamo assicurarci che abbia tutti i privilegi. 
+Puoi concedere i privilegi con il comando:
 ```sh
 GRANT ALL PRIVILEGES ON DATABASE biblioteca_db TO admin;
 ```
@@ -242,79 +279,110 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO admin;
 ```
+
+**Creo le colonne per bloccare le utenze nella tabella user:**
+```sh
+ALTER TABLE public.user
+ADD COLUMN failed_login_count INT DEFAULT 0,
+ADD COLUMN account_locked BOOLEAN DEFAULT FALSE;
+```
+
 10. Esecuzione del Server Flask e quindi avvio dell'appicazione:
 ```sh
 python app.py
 ```
 
-Le soluzioni di sicurezza che avevo menzionato sono state implementate nel codice che ti ho fornito. Ti spiego nel dettaglio come sono state applicate:
+## SICUREZZA
+L’applicazione implementa una serie di misure di sicurezza per garantire l’accesso controllato, la protezione dei file e l’integrità delle informazioni scambiate tra client e server. Di seguito le principali misure adottate.
 
-1. Autenticazione sicura con LDAP:
-Abbiamo implementato l'autenticazione tramite LDAP utilizzando il modulo ldap3. Quando un utente invia una richiesta di login, la sua username e password vengono verificate contro il server LDAP configurato nel file .env. Se la connessione e le credenziali sono valide, l'utente viene autenticato.
+**Autenticazione LDAP**
 
-Nel codice:
+L'applicazione implementa un sistema di autenticazione basato su LDAP, utilizzando la libreria ldap3.
+Quando un utente effettua il login, inserisce il proprio username e password. Queste credenziali vengono validate tramite il metodo ldap_authenticate, che stabilisce una connessione LDAP con il server configurato (i parametri sono definiti nel file .env).
+Se la connessione ha successo e le credenziali sono corrette, l’utente viene considerato autenticato.
+
+Questo meccanismo garantisce che solo utenti autorizzati e presenti nel sistema centrale possano accedere all'applicazione, migliorando il controllo e la sicurezza dell’accesso.
+
+Codice: **auth.py**
+```sh
 def ldap_authenticate(username, password):
-    server = Server(os.getenv('LDAP_URL'), get_info=ALL)
-    conn = Connection(server, user=os.getenv('LDAP_BIND_DN'), password=os.getenv('LDAP_PASSWORD'))
-    if not conn.bind():
-        raise Exception("Impossibile connettersi a LDAP")
-
-    search_filter = f"(uid={username})"
-    conn.search(os.getenv('LDAP_SEARCH_BASE'), search_filter, attributes=['uid', 'dn'])
-    
-    if len(conn.entries) == 0:
+...
+# Connessione al server LDAP
+        server = Server(ldap_url, use_ssl=True, get_info=ALL)
+        conn = Connection(server, user=bind_dn, password=bind_password)
+    ...
+    except Exception as e:
+        logging.error(f"❌ Errore LDAP: {e}")
         return False
-    
-    conn = Connection(server, user=conn.entries[0].dn, password=password)
-    if conn.bind():
-        return True
-    return False
+```
+
 Se le credenziali sono valide, l'utente riceve un JWT (JSON Web Token) che può essere utilizzato per accedere alle aree protette.
 
-2. Protezione delle credenziali con hashing (per la gestione degli utenti nel database):
-Nel caso in cui un utente non sia già presente nel database (per esempio, nel primo login), la sua password viene hashata utilizzando bcrypt prima di essere salvata nel database.
+**Hashing delle Password**
+Per garantire la sicurezza delle credenziali, le password degli utenti non vengono mai salvate in chiaro nel database. Utilizziamo l'algoritmo bcrypt per proteggere le password da attacchi di tipo dizionario e brute force. Quando un utente accede per la prima volta (ad esempio, durante il primo login), la sua password viene automaticamente hashata tramite bcrypt prima di essere salvata.
+Anche se l'autenticazione LDAP è gestita in modo sicuro senza la necessità di memorizzare la password nel database, abbiamo comunque implementato il salvataggio dell'utente nel database. Questo permette di tenere traccia degli utenti che accedono all'applicazione, pur mantenendo la sicurezza delle credenziali.
 
-from werkzeug.security import generate_password_hash, check_password_hash
+Codice: **auth.py**
+```sh
+@auth_bp.route('/login', methods=['POST'])
+def login():
+...
+if ldap_authenticate(username, password):
+        # Controlla se l'utente esiste nel database
+        user = User.query.filter_by(username=username).first()
+    ...
+  return jsonify({"msg": "Credenziali non valide"}), 401
+```
 
-user = User.query.filter_by(username=username).first()
-if not user:
-    user = User(username=username, password=generate_password_hash(password))
-    db.session.add(user)
-    db.session.commit()
-Anche se i dettagli di LDAP sono gestiti in maniera sicura (senza necessità di salvare la password nel database), ho incluso il salvataggio dell'utente nel database nel caso in cui si desideri tenere traccia degli utenti.
+**Autorizzazione tramite JWT**
+Il sistema utilizza JSON Web Token (JWT) per proteggere l'accesso alle risorse. Dopo l'autenticazione tramite LDAP, un JWT viene emesso per l'utente. Questo token deve essere incluso in tutte le richieste alle API protette, come quelle per caricare, scaricare o eliminare file.
+Ogni rotta protetta è decorata con il decoratore @jwt_required, che garantisce che solo gli utenti autenticati possano accedere a queste funzionalità, evitando di dover passare le credenziali in ogni richiesta.
 
-3. Protezione con JWT:
-Il sistema è protetto tramite JSON Web Token (JWT). Dopo il login, un JWT viene emesso per l'utente autenticato e questo token deve essere incluso nelle richieste alle risorse protette (come il download dei PDF).
-
-from flask_jwt_extended import JWTManager, create_access_token
-
+Dopo aver autenticato l'utente tramite LDAP, viene generato un JWT per l'accesso alle risorse:
+Codice: **auth.py**
+```sh
 access_token = create_access_token(identity=username)
-return jsonify(access_token=access_token)
-Questo impedisce che utenti non autenticati possano accedere alle risorse.
+return jsonify(access_token=access_token), 200
+```
+I percorsi protetti sono decorati con @jwt_required(), che verifica che l'utente abbia un JWT valido per accedere alle risorse:
+Codice: **routes.py**
+```sh
+routes_bp.route('/download/<filename>', methods=['GET'])
+@jwt_required()
+def download_file(filename):
+    # Logica per scaricare e decriptare il file
+    ...
+```
+**Crittografia dei File (AES-256)**
+I file PDF caricati dagli utenti sono cifrati utilizzando AES-256 prima di essere salvati nel sistema. Questo algoritmo garantisce una protezione robusta dei dati sensibili, rendendo i file illeggibili senza la chiave di decrittazione. I file rimangono crittografati anche a riposo e vengono decrittografati solo quando un utente autorizzato li scarica.
+In questo modo, anche se un attaccante dovesse ottenere l'accesso al filesystem, i contenuti dei file non sarebbero leggibili.
 
-4. Protezione dei file PDF con crittografia AES:
-I file PDF caricati vengono cifrati con AES-256 prima di essere salvati sul server. Questa è una forma di protezione dei documenti sensibili, poiché anche se qualcuno dovesse accedere al file system, i file PDF non sarebbero leggibili senza la chiave di decrittazione.
+Codice: **encryption.py**
+```sh
+def encrypt_file(file_data):
+    cipher = AES.new(KEY, AES.MODE_CBC)
+    encrypted_data = cipher.encrypt(pad(file_data, AES.block_size))
+    return cipher.iv + encrypted_data
 
+def decrypt_file(encrypted_data):
+    iv = encrypted_data[:16]
+    cipher = AES.new(KEY, AES.MODE_CBC, iv)
+    return unpad(cipher.decrypt(encrypted_data[16:]), AES.block_size)
+```
 
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-
-def encrypt_file(file, file_path):
-    key = os.urandom(32)  # AES-256 key
-    cipher = AES.new(key, AES.MODE_CBC)
-    
-    with open(file_path, 'wb') as out_file:
-        data = file.read()
-        encrypted_data = cipher.encrypt(pad(data, AES.block_size))
-        out_file.write(cipher.iv + encrypted_data)
-5. Sicurezza nelle richieste:
+**Sicurezza nelle richieste**
 Autenticazione basata su sessione: La libreria Flask-Login gestisce la sessione dell'utente in modo sicuro.
 
-Protezione contro attacchi CSRF (Cross-Site Request Forgery): Anche se non è implementato esplicitamente nel codice, con l'uso di Flask-Login e JWT, le sessioni sono gestite in modo sicuro, riducendo il rischio di attacchi CSRF. Se necessario, è possibile aggiungere token CSRF nei form di invio dati.
 
-Protezione contro attacchi SQL Injection: Poiché stiamo utilizzando SQLAlchemy come ORM, tutte le query al database sono preparate in modo sicuro, evitando vulnerabilità di SQL Injection.
+**Protezione contro attacchi SQL Injection e xss**
+Poiché stiamo utilizzando SQLAlchemy come ORM, tutte le query al database sono preparate in modo sicuro, evitando vulnerabilità di SQL Injection.
 
-6. Accesso controllato ai PDF:
+Nel codice, viene utilizzato SQLAlchemy come ORM per interagire con il database. SQLAlchemy gestisce automaticamente le query SQL in modo sicuro, evitando vulnerabilità come l'SQL Injection. Le query al database, come **User.query.filter_by(username=username).first()**, sono protette in modo sicuro poiché SQLAlchemy costruisce le query in modo parametrizzato, evitando che gli input degli utenti vengano trattati come parte del codice SQL.
+
+Per quanto riguarda l'XSS, Flask (tramite Jinja2), eseguirà automaticamente l'escape del contenuto, trattandolo come testo, non come HTML o JavaScript. Quindi, se l'utente invia un valore che contiene codice JavaScript (ad esempio, **<script>alert('XSS')</script>**), questo verrà visualizzato come testo nel browser e non come codice eseguito.
+Nel codice, la protezione contro XSS è gestita in tutte le route che restituiscono template HTML. Per esempio, nella route /dashboard.
+
+**Accesso controllato ai PDF**
 I file PDF vengono protetti dall'accesso non autorizzato tramite l'uso di JWT. Solo gli utenti autenticati (con un token JWT valido) possono scaricare i file PDF, come mostrato nell'endpoint /pdf/<filename>:
 
 @app.route('/pdf/<filename>', methods=['GET'])
@@ -328,11 +396,22 @@ def get_pdf(filename):
         return jsonify({"msg": "File non trovato"}), 404
 Se un utente non è autenticato, non potrà accedere a questa risorsa.
 
-Autenticazione sicura tramite LDAP.
-Hashing delle password e salvataggio sicuro nel database.
-Protezione tramite JWT per l'accesso alle risorse.
-Crittografia AES-256 per i file PDF.
-Controllo dell'accesso alle risorse protette (file PDF).
-Protezione contro SQL Injection tramite l'uso di SQLAlchemy.
-Quindi, oltre a elencare le soluzioni di sicurezza, le abbiamo effettivamente implementate nel progetto.
 
+**Protezione contro attacchi di brute-force**
+Implementazione di un sistema di blocco account in caso di tentativi di accesso sospetti.
+
+*Implementazione*
+Database: Aggiunta delle colonne **failed_login_count** (tentativi falliti) e **account_locked** (blocco account).
+
+Login: Se la password è errata, incrementiamo **failed_login_count**. Se supera una soglia (es. 3 tentativi), blocchiamo l'account.
+
+Reset tentativi: Dopo un login corretto, azzeriamo **failed_login_count**.
+
+Blocco account: Impediamo l'accesso se **account_locked** è vero, fino a sblocco manuale.
+
+Messaggi: Errore generico per login fallito, informazioni dettagliate solo per account bloccato
+
+**Logout**
+Il logout è gestito esclusivamente lato **client**, senza modifiche al backend.
+Quando l'utente effettua il logout, il token di autenticazione viene semplicemente rimosso dal `localStorage` del browser. Questo significa che non è necessario aggiungere alcuna logica specifica nel file `route.py`.
+Alla successiva ricarica della pagina, l'assenza del token farà sì che l'utente venga considerato non autenticato.
