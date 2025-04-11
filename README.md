@@ -290,6 +290,7 @@ python app.py
 ```
 
 ## Soluzioni di SICUREZZA adottate in base ai rischi previsti
+
 L’applicazione implementa una serie di misure di sicurezza per garantire l’accesso controllato, la protezione dei file e l’integrità delle informazioni scambiate tra client e server. Di seguito le principali misure adottate.
 
 **Autenticazione LDAP**
@@ -318,6 +319,7 @@ def ldap_authenticate(username, password):
 Se le credenziali sono valide, l'utente riceve un JWT (JSON Web Token) che può essere utilizzato per accedere alle aree protette.
 
 **Hashing delle Password**
+
 Per garantire la sicurezza delle credenziali, le password degli utenti non vengono mai salvate in chiaro nel database. Utilizziamo l'algoritmo bcrypt per proteggere le password da attacchi di tipo dizionario e brute force. Quando un utente accede per la prima volta (ad esempio, durante il primo login), la sua password viene automaticamente hashata tramite bcrypt prima di essere salvata.
 Anche se l'autenticazione LDAP è gestita in modo sicuro senza la necessità di memorizzare la password nel database, abbiamo comunque implementato il salvataggio dell'utente nel database. Questo permette di tenere traccia degli utenti che accedono all'applicazione, pur mantenendo la sicurezza delle credenziali.
 
@@ -334,6 +336,7 @@ if ldap_authenticate(username, password):
 ```
 
 **Autorizzazione tramite JWT** 
+
 Il sistema utilizza JSON Web Token (JWT) per proteggere l'accesso alle risorse. Dopo l'autenticazione tramite LDAP, viene emesso un JWT per l'utente. Questo token deve essere incluso in tutte le richieste alle API protette, come quelle per caricare, scaricare o eliminare file.
 
 Codice: **auth.py**
@@ -354,6 +357,7 @@ def download_file(filename):
 ```
 
 **Crittografia dei File PDF (AES-256)**
+
 I file PDF caricati dagli utenti sono cifrati utilizzando AES-256 prima di essere salvati nel sistema. Questo algoritmo garantisce una protezione robusta dei dati sensibili, rendendo i file illeggibili senza la chiave di decrittazione. I file rimangono crittografati anche a riposo e vengono decrittografati solo quando un utente autorizzato li scarica.
 In questo modo, anche se un attaccante dovesse ottenere l'accesso al filesystem, i contenuti dei file non sarebbero leggibili.
 
@@ -371,10 +375,12 @@ def decrypt_file(encrypted_data):
 ```
 
 **Sicurezza nelle richieste**
+
 La gestione della sessione utente è affidata alla libreria Flask-Login, che assicura un'esperienza sicura e protetta. Inoltre, è stato implementato un meccanismo per invalidare automaticamente il token JWT, garantendo che la sessione scada dopo un determinato periodo di tempo.
 SCERMATA!!!!!!!!!!
 
 **Protezione contro attacchi SQL Injection e xss**
+
 Poiché stiamo utilizzando SQLAlchemy come ORM, tutte le query al database sono preparate in modo sicuro, evitando vulnerabilità di SQL Injection.
 
 Nel codice, viene utilizzato SQLAlchemy come ORM per interagire con il database. SQLAlchemy gestisce automaticamente le query SQL in modo sicuro, evitando vulnerabilità come l'SQL Injection. Le query al database, come **User.query.filter_by(username=username).first()**, sono protette in modo sicuro poiché SQLAlchemy costruisce le query in modo parametrizzato, evitando che gli input degli utenti vengano trattati come parte del codice SQL.
@@ -385,6 +391,7 @@ Per esempio, nella route /dashboard.
 
 
 **Protezione contro attacchi di brute-force**
+
 Implementazione di un sistema di blocco account in caso di tentativi di accesso sospetti.
 
 *Implementazione*
@@ -401,6 +408,7 @@ Messaggi: Errore generico per login fallito, informazioni dettagliate solo per a
 SCERMATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 **Logout**
+
 Il logout è gestito esclusivamente lato **client**, senza modifiche al backend.
 Quando l'utente effettua il logout, il token di autenticazione viene semplicemente rimosso dal `localStorage` del browser. Questo significa che non è necessario aggiungere alcuna logica specifica nel file `route.py`.
 Alla successiva ricarica della pagina, l'assenza del token farà sì che l'utente venga considerato non autenticato.
