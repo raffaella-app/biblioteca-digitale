@@ -69,6 +69,7 @@ apt install python3
 ```
 
 3. Creazione dell'ambiente virtuale Python:
+
 #questo creerà una cartella "venv":
 ```sh
 python3 -m venv venv 
