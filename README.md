@@ -214,6 +214,7 @@ Se vuoi uscire dalla sessione psql, puoi usare il comando:
 \q
 ```
 Crea un database chiamato **biblioteca_db**
+
 Una volta dentro **psql**, puoi creare utente e il tuo database biblioteca_db con il comando:
 ```sh
 CREATE DATABASE biblioteca_db;
