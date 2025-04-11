@@ -187,7 +187,8 @@ sudo apt install postgresql postgresql-contrib
 ```
 #Questo installerà PostgreSQL e i pacchetti aggiuntivi necessari.
 
-Configura il servizio PostgreSQL su WSL
+- Configura il servizio PostgreSQL su WSL
+
 Su WSL il servizio PostgreSQL viene gestito tramite **systemctl**.
 
 Avvia il servizio PostgreSQL con:
@@ -213,7 +214,7 @@ Se vuoi uscire dalla sessione psql, puoi usare il comando:
 ```sh
 \q
 ```
-Crea un database chiamato **biblioteca_db**
+- Crea un database chiamato **biblioteca_db**
 
 Una volta dentro **psql**, puoi creare utente e il tuo database biblioteca_db con il comando:
 ```sh
@@ -223,10 +224,12 @@ Puoi verificare che il database sia stato creato correttamente con:
 ```sh
 \l
 ```
-- Creazione utente:
+- Creazione utente
   
-Creare un utente per il tuo database
+Creare un utente per il tuo database:
+
 Per utilizzare il database biblioteca_db, è consigliabile creare un nuovo utente.
+
 Esegui i seguenti comandi:
 ```sh
 CREATE USER username WITH PASSWORD 'password';
@@ -247,7 +250,7 @@ Puoi concedere i privilegi con il comando:
 ```sh
 GRANT ALL PRIVILEGES ON DATABASE biblioteca_db TO admin;
 ```
-Concedere privilegi su tutte le tabelle e oggetti:
+- Concedere privilegi su tutte le tabelle e oggetti:
 
 Poiché l'utente admin deve avere privilegi su tutte le tabelle e oggetti all'interno dello schema public, eseguire i seguenti comandi per concedere i privilegi su tutte le tabelle, sequenze e funzioni:
 
@@ -263,7 +266,8 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO admin;
 ```sh
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO admin;
 ```
-Concedere privilegi sulle future tabelle, sequenze e funzioni:
+
+- Concedere privilegi sulle future tabelle, sequenze e funzioni:
 
 Affinché l'utente admin possa avere privilegi anche su oggetti futuri creati nel database, eseguire i seguenti comandi:
 ```sh
@@ -272,7 +276,8 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO admin;
 ```
 
-**Creo le colonne per bloccare le utenze in caso di login falliti nella tabella user:**
+- Creo le colonne per bloccare le utenze in caso di login falliti nella tabella user:
+  
 ```sh
 ALTER TABLE public.user
 ADD COLUMN failed_login_count INT DEFAULT 0,
