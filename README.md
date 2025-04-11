@@ -68,20 +68,19 @@ apt update
 apt install python3
 ```
 
-3. Creazione dell'ambiente virtuale Python:  
+3. Creazione dell'ambiente virtuale Python:
+#questo creerà una cartella "venv":
 ```sh
 python3 -m venv venv 
 ```
-#questo creerà una cartella "venv";
-
+#avvia l'ambiente virtuale:
 ```sh
 source venv/bin/activate   
 ```
-#avvia l'ambiente virtuale;  
-
+  
 4. Installa le dipendenze necessarie:
 ```sh
-# Installa pip per Python 3, se non è già installato
+ # Installa pip per Python 3, se non è già installato
 sudo apt install python3-pip
 
 # Installa Flask-SQLAlchemy per l'integrazione di Flask con i database relazionali
@@ -283,6 +282,7 @@ Quando un utente effettua il login, inserisce il proprio username e password. Qu
 Se la connessione ha successo e le credenziali sono corrette, l’utente viene considerato autenticato.
 
 Questo meccanismo garantisce che solo utenti autorizzati e presenti nel sistema centrale possano accedere all'applicazione, migliorando il controllo e la sicurezza dell’accesso.
+
  Schermate!!!!!!!!!!!!!!!!!!!!! login!!
  
 Codice: **auth.py**
@@ -316,17 +316,17 @@ if ldap_authenticate(username, password):
   return jsonify({"msg": "Credenziali non valide"}), 401
 ```
 
-**Autorizzazione tramite JWT** (un po ripetuto)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Il sistema utilizza JSON Web Token (JWT) per proteggere l'accesso alle risorse. Dopo l'autenticazione tramite LDAP, un JWT viene emesso per l'utente. Questo token deve essere incluso in tutte le richieste alle API protette, come quelle per caricare, scaricare o eliminare file.
-Ogni rotta protetta è decorata con il decoratore @jwt_required, che garantisce che solo gli utenti autenticati possano accedere a queste funzionalità, evitando di dover passare le credenziali in ogni richiesta.
+**Autorizzazione tramite JWT** 
+Il sistema utilizza JSON Web Token (JWT) per proteggere l'accesso alle risorse. Dopo l'autenticazione tramite LDAP, viene emesso un JWT per l'utente. Questo token deve essere incluso in tutte le richieste alle API protette, come quelle per caricare, scaricare o eliminare file.
 
-Dopo aver autenticato l'utente tramite LDAP, viene generato un JWT per l'accesso alle risorse:
 Codice: **auth.py**
 ```sh
 access_token = create_access_token(identity=username)
 return jsonify(access_token=access_token), 200
 ```
-I percorsi protetti sono decorati con @jwt_required(), che verifica che l'utente abbia un JWT valido per accedere alle risorse:
+
+Le rotte protette sono decorate con il decoratore @jwt_required(), che garantisce che solo gli utenti autenticati possano accedere a queste risorse, evitando di dover fornire le credenziali in ogni richiesta.
+
 Codice: **routes.py**
 ```sh
 routes_bp.route('/download/<filename>', methods=['GET'])
@@ -335,6 +335,7 @@ def download_file(filename):
     # Logica per scaricare e decriptare il file
     ...
 ```
+
 **Crittografia dei File PDF (AES-256)**
 I file PDF caricati dagli utenti sono cifrati utilizzando AES-256 prima di essere salvati nel sistema. Questo algoritmo garantisce una protezione robusta dei dati sensibili, rendendo i file illeggibili senza la chiave di decrittazione. I file rimangono crittografati anche a riposo e vengono decrittografati solo quando un utente autorizzato li scarica.
 In questo modo, anche se un attaccante dovesse ottenere l'accesso al filesystem, i contenuti dei file non sarebbero leggibili.
@@ -353,7 +354,7 @@ def decrypt_file(encrypted_data):
 ```
 
 **Sicurezza nelle richieste**
-Autenticazione basata su sessione: La libreria Flask-Login gestisce la sessione dell'utente in modo sicuro. Inoltre, è stato implementato un meccanismo di Invalidazione del tocken JWT per far scadere la sessione dopo tot tempo.!!!!
+La gestione della sessione utente è affidata alla libreria Flask-Login, che assicura un'esperienza sicura e protetta. Inoltre, è stato implementato un meccanismo per invalidare automaticamente il token JWT, garantendo che la sessione scada dopo un determinato periodo di tempo.
 SCERMATA!!!!!!!!!!
 
 **Protezione contro attacchi SQL Injection e xss**
@@ -362,7 +363,8 @@ Poiché stiamo utilizzando SQLAlchemy come ORM, tutte le query al database sono 
 Nel codice, viene utilizzato SQLAlchemy come ORM per interagire con il database. SQLAlchemy gestisce automaticamente le query SQL in modo sicuro, evitando vulnerabilità come l'SQL Injection. Le query al database, come **User.query.filter_by(username=username).first()**, sono protette in modo sicuro poiché SQLAlchemy costruisce le query in modo parametrizzato, evitando che gli input degli utenti vengano trattati come parte del codice SQL.
 
 Per quanto riguarda l'XSS, Flask (tramite Jinja2), eseguirà automaticamente l'escape del contenuto, trattandolo come testo, non come HTML o JavaScript. Quindi, se l'utente invia un valore che contiene codice JavaScript (ad esempio, **<script>alert('XSS')</script>**), questo verrà visualizzato come testo nel browser e non come codice eseguito.
-Nel codice, la protezione contro XSS è gestita in tutte le route che restituiscono template HTML. Per esempio, nella route /dashboard.
+Nel codice, la protezione contro XSS è gestita in tutte le route che restituiscono template HTML.
+Per esempio, nella route /dashboard.
 
 
 **Protezione contro attacchi di brute-force**
