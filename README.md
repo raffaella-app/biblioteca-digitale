@@ -73,6 +73,7 @@ apt install python3
 ```sh
 python3 -m venv venv 
 ```
+
 #avvia l'ambiente virtuale:
 ```sh
 source venv/bin/activate   
