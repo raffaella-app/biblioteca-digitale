@@ -223,13 +223,16 @@ Puoi verificare che il database sia stato creato correttamente con:
 \l
 ```
 - Creazione utente:
- Creare un utente per il tuo database
-Per utilizzare il database biblioteca_db, è consigliabile creare un nuovo utente. Esegui i seguenti comandi:
+  
+Creare un utente per il tuo database
+Per utilizzare il database biblioteca_db, è consigliabile creare un nuovo utente.
+Esegui i seguenti comandi:
 ```sh
 CREATE USER username WITH PASSWORD 'password';
 ```
 
 - Trasferire la proprietà del database:
+  
 Per trasferire la proprietà del database biblioteca_db all'utente admin, esegui il comando:
 ```sh
 ALTER DATABASE biblioteca_db OWNER TO username;
