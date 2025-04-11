@@ -114,6 +114,7 @@ pip install psycopg2-binary
 ```
 
 5. VARIABILI D'AMBIENTE
+
 Creiamo un file .env per gestire le variabili di ambiente:
 ```sh
 touch .env
@@ -133,6 +134,7 @@ SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 ```
 6. INSTALLAZIONE LDAP:
+
 -   Installare ldap3 (client LDAP in Python)
 -   Installare un server LDAP (OpenLDAP )
 
@@ -173,9 +175,11 @@ Comandi LDAP:
 
 
 7. Creazione dell'app Flask e configurazione di LDAP
+   
 Crea il file app.py e inizializza Flask e le configurazioni per LDAP: (tutto in **app.py**)
 
-8. Configurazione del Database PostgreSQL
+9. Configurazione del Database PostgreSQL
+    
 Installa PostgreSQL su WSL (vedere versone psql --version)
 ```sh
 sudo apt update
