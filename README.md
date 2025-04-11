@@ -36,26 +36,22 @@ Libreria Python per la cifratura dei file, utilizzata per implementare l'algorit
 
 ## Struttura progetto
 
-| Nome File/Cartella  | Descrizione                                                   |
-|---------------------|---------------------------------------------------------------|
-| `app.py`            | File principale dell'app Flask                                |
-| `config.py`         | Configurazione dell'applicazione                              |
-| `models.py`         | Modelli ORM del database (SQLAlchemy)                         |
-| `auth.py`           | Gestione dell'autenticazione (LDAP + JWT)                     |
-| `encryption.py`     | Funzioni di crittografia dei file PDF                         |
-| `routes.py`         | Definizione delle rotte per upload/download PDF               |
-| `database.db`       | Database locale SQLite (se non usi PostgreSQL)                |
-| `uploads/`          | Directory che contiene i file PDF cifrati                     |
-| `.env`              | File per la configurazione delle variabili d'ambiente         |
-| `requirements.txt`  | Elenco delle dipendenze Python da installare                  |
-| `.gitignore`          | File per ignorare il push su gitlab di tutti i file indicati all'interno                      |
-| `template/`| Directory che contiene i file html        |
- | `dashboard.html`|          |
- | `index.html`| File per la configurazione delle variabili d'ambiente         |
- | `login.html`| File per la configurazione delle variabili d'ambiente         |
-| `test.ldif`  | Elenco delle dipendenze Python da installare                  |
-
-
+| Nome File/Cartella             | Descrizione                                                                                                                                                         |
+|--------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `app.py`                       | File principale dell'app Flask. Gestisce la configurazione dell'app, le estensioni come SQLAlchemy, JWT e Flask-Login, oltre alle rotte principali.                 |
+| `config.py`                    | Configurazione dell'applicazione, inclusi i segreti JWT, le credenziali per il database e la connessione LDAP.                                                      |
+| `models.py`                    | Modelli ORM del database (SQLAlchemy), che definisce la struttura delle tabelle del database e le operazioni di accesso ai dati.                                    |
+| `auth.py`                      | Gestione dell'autenticazione tramite LDAP e JWT, inclusi i metodi per il login e la gestione delle sessioni utente.                                                 |
+| `encryption.py`                | Funzioni di crittografia per proteggere i file PDF caricati.                                                                                                       |
+| `routes.py`                    | Definizione delle rotte per la gestione dell'upload, download e visualizzazione dei file PDF cifrati.                                                              |
+| `uploads/`                     | Cartella che contiene i file PDF cifrati caricati dagli utenti.                                                                                                    |
+| `.env`                         | File per la configurazione delle variabili d'ambiente (come chiavi di API, credenziali di accesso, ecc.).                                                           |
+| `.gitignore`                   | File per evitare che Git includa determinati file o cartelle nel repository (ad esempio, chiavi segrete o il database locale).                                      |
+| `template/`                    | Cartella che contiene i file HTML utilizzati per l'interfaccia utente.                                                                                             |
+| `template/dashboard.html`      | Pagina di benvenuto della dashboard utente, con funzionalità per caricare, visualizzare, scaricare e eliminare file PDF. Include un'area di logout.                   |
+| `template/index.html`          | Pagina di login che permette agli utenti di inserire username e password per accedere all'applicazione. Se il login ha successo, redirige alla dashboard.           |
+| `template/login.html`          | Pagina di login alternativa, simile a `index.html`, che gestisce l'autenticazione dell'utente e mostra un messaggio di errore se le credenziali sono errate.         |
+| `user.ldif`                    | File di esempio in formato LDIF usato per la creazione degli utenti su LDAP.                                                                                              |
 ## Procedura per l'avvio dell'applicazione
 
 1. Creazione dell'ambiente e installazione delle dipendenze:
@@ -81,18 +77,38 @@ python3 -m venv venv
 ```sh
 source venv/bin/activate   
 ```
-#avvia l'ambiente virtuale;
+#avvia l'ambiente virtuale;  
+
 4. Installa le dipendenze necessarie:
 ```sh
-sudo apt install python3-pip #add comment
+# Installa pip per Python 3, se non è già installato
+sudo apt install python3-pip
+
+# Installa Flask-SQLAlchemy per l'integrazione di Flask con i database relazionali
 pip3 install flask_sqlalchemy
+
+# Installa Flask-Login per gestire l'autenticazione e le sessioni utente
 pip3 install Flask-Login
+
+# Installa ldap3 per l'interazione con server LDAP
 pip3 install ldap3
+
+# Installa Flask-JWT-Extended per implementare l'autenticazione basata su token JWT
 pip3 install flask_jwt_extended
+
+# Installa Flask, il framework web leggero per Python
 pip3 install Flask
+
+# Installa bcrypt per l'hashing sicuro delle password
 pip3 install bcrypt
+
+# Installa dotenv per caricare variabili d'ambiente da un file .env
 pip3 install dotenv
+
+# Installa pycryptodome per le operazioni di crittografia avanzata
 pip3 install pycryptodome
+
+# Installa psycopg2-binary per la connessione a database PostgreSQL
 pip install psycopg2-binary
 ```
 
@@ -108,16 +124,16 @@ SECRET_KEY=una_chiave_segreta
 JWT_SECRET=your_jwt_secret
 LDAP_URL=ldap://localhost:389
 LDAP_BIND_DN=cn=admin,dc=library,dc=com
-LDAP_PASSWORD=raffa
+LDAP_PASSWORD=password
 LDAP_SEARCH_BASE=ou=users,dc=library,dc=com
-DATABASE_URL=postgresql://admin:db_admin_library@localhost:5432/biblioteca_db
-ENCRYPTION_KEY=0123456789abcdef0123456789abcdef
+DATABASE_URL=postgresql://username:password@localhost:5432/biblioteca_db
+ENCRYPTION_KEY=inserire_ENCRYPTION_KEY_in_esadecimale_32_caratteri
 SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 ```
 6. INSTALLAZIONE LDAP:
 -   Installare ldap3 (client LDAP in Python)
--   Installare un server LDAP (OpenLDAP su Linux o Windows)
+-   Installare un server LDAP (OpenLDAP )
 
 1️) Installare ldap3 (Client LDAP in Python):
 ```sh
@@ -138,17 +154,15 @@ Durante l'installazione, ci chiedereà una password l'amministratore LDAP da con
 
 Per riconfigurare il server LDAP (se necessario):
 ```sh
-sudo dpkg-reconfigure slapd 
+sudo dpkg-reconfigure slapd  (per creare il dominio LDAP, es. "library")
 ```
-(inizializzo il diminio dove verranno creati gli utenti)
 
 Installare un LDAP Browser su windows:
 ```sh
-https://directory.apache.org/studio/download/download-windows.html (Per creare utenti e usare ldap da interfaccia grafica)
+https://directory.apache.org/studio/download/download-windows.html (Per usare ldap da interfaccia grafica)
 ```
 
-In **/home/raffa/ldap** della WSL ci sono dei file per inizializzare l'LDAP:
-prima lanciare
+Comandi LDAP:
 
 | Comando                                                                                                     | Descrizione                                                       |
 |-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
@@ -157,25 +171,19 @@ prima lanciare
 | `ldapdelete -x -D "cn=admin,dc=library,dc=com" -W "uid=test1,ou=users,dc=library,dc=com"`                   | Cancella un utente dalla directory LDAP                           |
 
 
-Se mi connetto da gui vedo i risultati.
-
 7. Creazione dell'app Flask e configurazione di LDAP
 Crea il file app.py e inizializza Flask e le configurazioni per LDAP: (tutto in **app.py**)
-Aggiungere codice **app.py** (verificare se è cosi o spostati in altri file)
-    
-8. Crittografia dei file PDF
-La funzione encrypt_file utilizza la libreria **pycryptodome** per cifrare i file PDF. Ogni volta che un file viene caricato, viene cifrato con AES-256 prima di essere salvato sul server.
 
-9. Configurazione del Database PostgreSQL
-Installa PostgreSQL su WSL (mettere versone psql --version)
+8. Configurazione del Database PostgreSQL
+Installa PostgreSQL su WSL (vedere versone psql --version)
 ```sh
 sudo apt update
 sudo apt install postgresql postgresql-contrib
 ```
-Questo installerà PostgreSQL e i pacchetti aggiuntivi necessari.
+#Questo installerà PostgreSQL e i pacchetti aggiuntivi necessari.
 
 Configura il servizio PostgreSQL su WSL
-A differenza di Windows, su WSL il servizio PostgreSQL viene gestito tramite **systemctl**.
+Su WSL il servizio PostgreSQL viene gestito tramite **systemctl**.
 
 Avvia il servizio PostgreSQL con:
 ```sh
@@ -221,7 +229,7 @@ Per trasferire la proprietà del database biblioteca_db all'utente admin, esegui
 ```sh
 ALTER DATABASE biblioteca_db OWNER TO username;
 ```
-Questo comando cambierà il proprietario del database a admin.
+Questo comando cambierà il proprietario del database al proprio utente (in questo caso admin).
 
 - Concedere tutti i privilegi sull'intero database a admin:
 Ora che l'utente admin è il proprietario del database, dobbiamo assicurarci che abbia tutti i privilegi. 
@@ -230,7 +238,7 @@ Puoi concedere i privilegi con il comando:
 GRANT ALL PRIVILEGES ON DATABASE biblioteca_db TO admin;
 ```
 Concedere privilegi su tutte le tabelle e oggetti:
-Poiché l'utente admin deve avere privilegi su tutte le tabelle e oggetti all'interno dello schema public (e eventualmente su altri schemi), esegui i seguenti comandi per concedere i privilegi su tutte le tabelle, sequenze e funzioni:
+Poiché l'utente admin deve avere privilegi su tutte le tabelle e oggetti all'interno dello schema public, eseguire i seguenti comandi per concedere i privilegi su tutte le tabelle, sequenze e funzioni:
 
 -- Concedi tutti i privilegi sulle tabelle
 ```sh
@@ -245,14 +253,14 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO admin;
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO admin;
 ```
 Concedere privilegi sulle future tabelle, sequenze e funzioni:
-Affinché l'utente admin possa avere privilegi anche su oggetti futuri creati nel database, esegui i seguenti comandi:
+Affinché l'utente admin possa avere privilegi anche su oggetti futuri creati nel database, eseguire i seguenti comandi:
 ```sh
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO admin;
 ```
 
-**Creo le colonne per bloccare le utenze nella tabella user:**
+**Creo le colonne per bloccare le utenze in caso di login falliti nella tabella user:**
 ```sh
 ALTER TABLE public.user
 ADD COLUMN failed_login_count INT DEFAULT 0,
@@ -261,8 +269,9 @@ ADD COLUMN account_locked BOOLEAN DEFAULT FALSE;
 
 10. Esecuzione del Server Flask e quindi avvio dell'appicazione:
 ```sh
-python app.py
+python app.py 
 ```
+#avvio dell'app
 
 ## Soluzioni di SICUREZZA adottate in base ai rischi previsti
 L’applicazione implementa una serie di misure di sicurezza per garantire l’accesso controllato, la protezione dei file e l’integrità delle informazioni scambiate tra client e server. Di seguito le principali misure adottate.
@@ -274,7 +283,8 @@ Quando un utente effettua il login, inserisce il proprio username e password. Qu
 Se la connessione ha successo e le credenziali sono corrette, l’utente viene considerato autenticato.
 
 Questo meccanismo garantisce che solo utenti autorizzati e presenti nel sistema centrale possano accedere all'applicazione, migliorando il controllo e la sicurezza dell’accesso.
-
+ Schermate!!!!!!!!!!!!!!!!!!!!! login!!
+ 
 Codice: **auth.py**
 ```sh
 def ldap_authenticate(username, password):
@@ -306,7 +316,7 @@ if ldap_authenticate(username, password):
   return jsonify({"msg": "Credenziali non valide"}), 401
 ```
 
-**Autorizzazione tramite JWT**
+**Autorizzazione tramite JWT** (un po ripetuto)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Il sistema utilizza JSON Web Token (JWT) per proteggere l'accesso alle risorse. Dopo l'autenticazione tramite LDAP, un JWT viene emesso per l'utente. Questo token deve essere incluso in tutte le richieste alle API protette, come quelle per caricare, scaricare o eliminare file.
 Ogni rotta protetta è decorata con il decoratore @jwt_required, che garantisce che solo gli utenti autenticati possano accedere a queste funzionalità, evitando di dover passare le credenziali in ogni richiesta.
 
@@ -325,7 +335,7 @@ def download_file(filename):
     # Logica per scaricare e decriptare il file
     ...
 ```
-**Crittografia dei File (AES-256)**
+**Crittografia dei File PDF (AES-256)**
 I file PDF caricati dagli utenti sono cifrati utilizzando AES-256 prima di essere salvati nel sistema. Questo algoritmo garantisce una protezione robusta dei dati sensibili, rendendo i file illeggibili senza la chiave di decrittazione. I file rimangono crittografati anche a riposo e vengono decrittografati solo quando un utente autorizzato li scarica.
 In questo modo, anche se un attaccante dovesse ottenere l'accesso al filesystem, i contenuti dei file non sarebbero leggibili.
 
@@ -343,8 +353,8 @@ def decrypt_file(encrypted_data):
 ```
 
 **Sicurezza nelle richieste**
-Autenticazione basata su sessione: La libreria Flask-Login gestisce la sessione dell'utente in modo sicuro.
-
+Autenticazione basata su sessione: La libreria Flask-Login gestisce la sessione dell'utente in modo sicuro. Inoltre, è stato implementato un meccanismo di Invalidazione del tocken JWT per far scadere la sessione dopo tot tempo.!!!!
+SCERMATA!!!!!!!!!!
 
 **Protezione contro attacchi SQL Injection e xss**
 Poiché stiamo utilizzando SQLAlchemy come ORM, tutte le query al database sono preparate in modo sicuro, evitando vulnerabilità di SQL Injection.
@@ -353,20 +363,6 @@ Nel codice, viene utilizzato SQLAlchemy come ORM per interagire con il database.
 
 Per quanto riguarda l'XSS, Flask (tramite Jinja2), eseguirà automaticamente l'escape del contenuto, trattandolo come testo, non come HTML o JavaScript. Quindi, se l'utente invia un valore che contiene codice JavaScript (ad esempio, **<script>alert('XSS')</script>**), questo verrà visualizzato come testo nel browser e non come codice eseguito.
 Nel codice, la protezione contro XSS è gestita in tutte le route che restituiscono template HTML. Per esempio, nella route /dashboard.
-
-**Accesso controllato ai PDF**
-I file PDF vengono protetti dall'accesso non autorizzato tramite l'uso di JWT. Solo gli utenti autenticati (con un token JWT valido) possono scaricare i file PDF, come mostrato nell'endpoint /pdf/<filename>:
-
-@app.route('/pdf/<filename>', methods=['GET'])
-@login_required
-def get_pdf(filename):
-    file_path = os.path.join('uploads', filename)
-    
-    if os.path.exists(file_path):
-        return send_from_directory('uploads', filename)
-    else:
-        return jsonify({"msg": "File non trovato"}), 404
-Se un utente non è autenticato, non potrà accedere a questa risorsa.
 
 
 **Protezione contro attacchi di brute-force**
@@ -383,10 +379,12 @@ Blocco account: Impediamo l'accesso se **account_locked** è vero, fino a sblocc
 
 Messaggi: Errore generico per login fallito, informazioni dettagliate solo per account bloccato
 
+SCERMATA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 **Logout**
 Il logout è gestito esclusivamente lato **client**, senza modifiche al backend.
 Quando l'utente effettua il logout, il token di autenticazione viene semplicemente rimosso dal `localStorage` del browser. Questo significa che non è necessario aggiungere alcuna logica specifica nel file `route.py`.
 Alla successiva ricarica della pagina, l'assenza del token farà sì che l'utente venga considerato non autenticato.
 
-**Invalidazione del tocken JWT per far scadere la sessione**
+
 
