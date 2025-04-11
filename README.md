@@ -237,12 +237,14 @@ ALTER DATABASE biblioteca_db OWNER TO username;
 Questo comando cambierà il proprietario del database al proprio utente (in questo caso admin).
 
 - Concedere tutti i privilegi sull'intero database a admin:
+  
 Ora che l'utente admin è il proprietario del database, dobbiamo assicurarci che abbia tutti i privilegi. 
 Puoi concedere i privilegi con il comando:
 ```sh
 GRANT ALL PRIVILEGES ON DATABASE biblioteca_db TO admin;
 ```
 Concedere privilegi su tutte le tabelle e oggetti:
+
 Poiché l'utente admin deve avere privilegi su tutte le tabelle e oggetti all'interno dello schema public, eseguire i seguenti comandi per concedere i privilegi su tutte le tabelle, sequenze e funzioni:
 
 -- Concedi tutti i privilegi sulle tabelle
@@ -258,6 +260,7 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO admin;
 GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO admin;
 ```
 Concedere privilegi sulle future tabelle, sequenze e funzioni:
+
 Affinché l'utente admin possa avere privilegi anche su oggetti futuri creati nel database, eseguire i seguenti comandi:
 ```sh
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO admin;
