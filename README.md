@@ -288,7 +288,6 @@ ADD COLUMN account_locked BOOLEAN DEFAULT FALSE;
 ```sh
 python app.py 
 ```
-#avvio dell'app
 
 ## Soluzioni di SICUREZZA adottate in base ai rischi previsti
 L’applicazione implementa una serie di misure di sicurezza per garantire l’accesso controllato, la protezione dei file e l’integrità delle informazioni scambiate tra client e server. Di seguito le principali misure adottate.
