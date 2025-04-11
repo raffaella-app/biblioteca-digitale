@@ -5,7 +5,6 @@ Il progetto consiste nella creazione di un'applicazione web per una biblioteca d
  SCERMATA screen PROGETTO:
 
  
- 
 ## Tecnologie Utilizzate
 
 ### Backend
@@ -15,13 +14,10 @@ Python con il framework Flask, utilizzato per lo sviluppo dell'applicazione web 
 PostgreSQL, un sistema di gestione di database relazionali robusto e scalabile, impiegato per archiviare i dati relativi agli utenti e altre informazioni.
 
 ### Autenticazione
-Utilizzo del protocollo LDAP per la gestione dell'autenticazione utente, tramite la libreria ldap3, che consente una connessione sicura e verifiche delle credenziali contro un server LDAP.
+Utilizzo del protocollo LDAP per la gestione dell'autenticazione utente, tramite la libreria ldap3, che consente una connessione sicura e verifiche delle credenziali su un server LDAP.
 
 ### Storage
 I file PDF vengono gestiti e archiviati nel file system locale, con una gestione sicura e strutturata.
-
-### Sicurezza:
-Implementazione della crittografia AES-256 per proteggere i file PDF e garantire la sicurezza dei documenti sensibili, insieme all'uso di bcrypt per l'hashing delle password e la protezione dei dati degli utenti.
 
 ## Framework e Librerie
 
@@ -37,36 +33,6 @@ Estensione di Flask per gestire in modo sicuro le sessioni degli utenti e l'aute
 ### pycryptodome 
 Libreria Python per la cifratura dei file, utilizzata per implementare l'algoritmo di crittografia AES-256 che protegge i file PDF caricati dagli utenti.
 
-## Problemi di Sicurezza
-
-### Accesso non autorizzato
-Rischio che utenti non autenticati accedano ai documenti sensibili.
-
-### Furto di credenziali
-Vulnerabilità agli attacchi di phishing o brute-force.
-
-### Condivisione non autorizzata dei file 
-Possibilità di distribuzione illegale dei file PDF.
-
-### Attacchi informatici vari
-Rischio di attacchi come SQL Injection e Cross-Site Scripting (XSS) per compromettere la sicurezza del sistema.
-
-## Soluzioni di Sicurezza
-
-### Autenticazione sicura tramite LDAP
-Gli utenti devono autenticarsi tramite LDAP prima di accedere al sistema, riducendo il rischio di accesso non autorizzato.
-
-### Crittografia dei file
-I file PDF sono cifrati con AES-256, impedendo l'accesso non autorizzato ai contenuti.
-
-### Protezione contro attacchi di brute-force
-Implementazione di un sistema di blocco account in caso di tentativi di accesso sospetti.
-
-### Hashing delle password con bcrypt
-Le password degli utenti sono protette tramite hashing sicuro, prevenendo la compromissione delle credenziali in caso di attacco.
-
-### Validazione degli input e protezione contro SQL Injection e XSS
-Uso di query parametrizzate per evitare SQL Injection e sanificazione dell'input per prevenire XSS.
 
 ## Struttura progetto
 
@@ -82,6 +48,12 @@ Uso di query parametrizzate per evitare SQL Injection e sanificazione dell'input
 | `uploads/`          | Directory che contiene i file PDF cifrati                     |
 | `.env`              | File per la configurazione delle variabili d'ambiente         |
 | `requirements.txt`  | Elenco delle dipendenze Python da installare                  |
+| `.gitignore`          | File per ignorare il push su gitlab di tutti i file indicati all'interno                      |
+| `template/`| Directory che contiene i file html        |
+ | `dashboard.html`|          |
+ | `index.html`| File per la configurazione delle variabili d'ambiente         |
+ | `login.html`| File per la configurazione delle variabili d'ambiente         |
+| `test.ldif`  | Elenco delle dipendenze Python da installare                  |
 
 
 ## Procedura per l'avvio dell'applicazione
@@ -292,7 +264,7 @@ ADD COLUMN account_locked BOOLEAN DEFAULT FALSE;
 python app.py
 ```
 
-## SICUREZZA
+## Soluzioni di SICUREZZA adottate in base ai rischi previsti
 L’applicazione implementa una serie di misure di sicurezza per garantire l’accesso controllato, la protezione dei file e l’integrità delle informazioni scambiate tra client e server. Di seguito le principali misure adottate.
 
 **Autenticazione LDAP**
@@ -415,3 +387,6 @@ Messaggi: Errore generico per login fallito, informazioni dettagliate solo per a
 Il logout è gestito esclusivamente lato **client**, senza modifiche al backend.
 Quando l'utente effettua il logout, il token di autenticazione viene semplicemente rimosso dal `localStorage` del browser. Questo significa che non è necessario aggiungere alcuna logica specifica nel file `route.py`.
 Alla successiva ricarica della pagina, l'assenza del token farà sì che l'utente venga considerato non autenticato.
+
+**Invalidazione del tocken JWT per far scadere la sessione**
+
